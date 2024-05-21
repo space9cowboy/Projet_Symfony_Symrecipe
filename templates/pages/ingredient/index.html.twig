@@ -5,12 +5,22 @@
 
 {% block body %}
     <div class="container mt-4" >
+  {# condititon si ingredient n'etait pas vide on affiche l'affichage classique et qui si il ne l'est pas on affiche qu'il n'y pas d'ingredient#}
+{% if not ingredients.items is same as ([]) %}
         <h1>Mes ingrédients</h1>
+    {# path : packa de symfony qui nous permet de renseigner une Route #}
+    <a href="{{ path('ingredient.new')}}" class="btn btn-primary">
+    Ajouter un ingrédient</a>
 
     <h4 class="count mt-4">
         Il y a {{ ingredients.getTotalItemCount}} ingrédients au total
     </h4>
         
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
 
 <table class="table table-hover mt-4">
   <thead>
@@ -42,6 +52,9 @@
 <div class="navigation d-flex justify-content-center">
     {{ knp_pagination_render(ingredients) }}
 </div>
+{% else %}
+    <h4>Il n'y a pas d'ingrédients</h4>
+{% endif %}
  
         
 </div>
